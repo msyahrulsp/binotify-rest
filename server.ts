@@ -1,17 +1,20 @@
+require('dotenv').config()
+
+/**
+ * @type {import('fastify').FastifyInstance} Instance of Fastify
+ */
 const fastify = require('fastify')({
   logger: true
 });
 
-// Declare a route
-fastify.get('/', function (request: Request, reply: any) {
-  reply.send({ hello: 'world' });
-});
+fastify.register(require('./db-connector'))
+fastify.register(require('./routes'))
 
 // Run the server!
-fastify.listen({ port: 3000 }, function (err: Error, address: number) {
+fastify.listen({ port: process.env.APP_PORT }, function (err: Error, address: number) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
   }
-  console.log(`Server is now listening on asdas ${address}`);
+  console.log(`Server is now listening on ${address}`);
 });
