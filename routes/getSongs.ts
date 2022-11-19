@@ -18,7 +18,7 @@ function getSOAPReturn(xmlString: string) {
  * @param {Object} options plugin options, refer to https://www.fastify.io/docs/latest/Reference/Plugins/#plugin-options
  */
 async function getSongs(fastify, options) {
-  fastify.get('/songs/singer/:singerid', async (req, reply) => {
+  fastify.get('/singer/:singerid/songs', async (req, reply) => {
     const { singerid } = req.params
     const connection = await fastify.mysql.getConnection()
     const [rows, fields] = await connection.query(`SELECT song_id, judul, penyanyi_id, audio_path, name FROM song inner join user on song.penyanyi_id = user.user_id where song.penyanyi_id=${singerid}`)
@@ -26,7 +26,7 @@ async function getSongs(fastify, options) {
     return rows
   })
 
-  fastify.get('/songs/singer/:singerid/user/:userid', async (req, reply) => {
+  fastify.get('/status/singer/:singerid/user/:userid', async (req, reply) => {
     /**
      * digunakan untuk pendengar
      * fetch list lagu dari seorang penyanyi
