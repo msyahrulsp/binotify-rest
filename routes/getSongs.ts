@@ -11,21 +11,31 @@ function getSOAPReturn(xmlString: string) {
   }
   return payload === 'true'
 }
+
 /**
  * A plugin that provide encapsulated routes
  * @param {FastifyInstance} fastify encapsulated fastify instance
  * @param {Object} options plugin options, refer to https://www.fastify.io/docs/latest/Reference/Plugins/#plugin-options
  */
- async function getSongs(fastify, options) {
-  /**
-   * fetch list lagu dari seorang penyanyi
-   * meminta validasi ke SOAP apakah pengguna binotify sudah subscribe terhadap penyanyi yang diminta
-   * @param {int} userid - id pengguna binotify yang melakukan request
-   * @param {int} singerid - id penyanyi yang diminta
-   * 
-   * SOAP return boolean
-   *  */  
+async function getSongs(fastify, options) {
+  fastify.get('/songs/singer/:singerid', async (req, reply) => {
+    const { singerid } = req.params
+    const connection = await fastify.mysql.getConnection()
+    const [rows, fields] = await connection.query(`SELECT * from song where penyanyi_id=${singerid}`)
+    connection.release()
+    return rows
+  })
+
   fastify.get('/songs/singer/:singerid/user/:userid', async (req, reply) => {
+    /**
+     * digunakan untuk pendengar
+     * fetch list lagu dari seorang penyanyi
+     * meminta validasi ke SOAP apakah pengguna binotify sudah subscribe terhadap penyanyi yang diminta
+     * @param {int} userid - id pengguna binotify yang melakukan request
+     * @param {int} singerid - id penyanyi yang diminta
+     * 
+     * SOAP return string
+     *  */  
     const { singerid, userid } = req.params
     let subscriptionStatus: boolean = false
 
