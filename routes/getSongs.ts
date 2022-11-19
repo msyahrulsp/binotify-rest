@@ -2,13 +2,14 @@ import axios from "axios"
 import { DOMParser } from 'xmldom'
 
 function getSOAPReturn(xmlString: string) {
-  let payload = null
+  let payload:string = ''
   const xml = new DOMParser().parseFromString(xmlString, 'text/xml')
   const returnElmt = xml.getElementsByTagName('return')
-  if (returnElmt[0]) {
+  if (returnElmt[0].firstChild) {
+    // @ts-expect-error
     payload = returnElmt[0].firstChild.data
   }
-  return payload
+  return payload === 'true'
 }
 /**
  * A plugin that provide encapsulated routes
@@ -25,10 +26,6 @@ function getSOAPReturn(xmlString: string) {
    * SOAP return boolean
    *  */  
   fastify.get('/songs/singer/:singerid/user/:userid', async (req, reply) => {
-    // const connection = await fastify.mysql.getConnection()
-    // const [rows, fields] = await connection.query('SELECT * from song')
-    // connection.release()
-    // return rows
     const { singerid, userid } = req.params
     let subscriptionStatus: boolean = false
 
@@ -51,11 +48,19 @@ function getSOAPReturn(xmlString: string) {
       }
     ).then((res) => {
       if (res.status === 200) {
-        const payload = getSOAPReturn(res.data)
-        return payload
+        subscriptionStatus = getSOAPReturn(res.data)
       }
     }).catch((err) => {
-      return false
+      console.info(err)
+    }).then(async () => {
+      if (subscriptionStatus) {
+        const connection = await fastify.mysql.getConnection()
+        const [rows, fields] = await connection.query(`SELECT * from song where penyanyi_id=${singerid}`)
+        connection.release()
+        return rows
+      } else {
+        return null
+      }
     })
   })
 }
