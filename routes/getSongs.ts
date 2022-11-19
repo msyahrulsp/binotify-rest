@@ -21,7 +21,7 @@ async function getSongs(fastify, options) {
   fastify.get('/songs/singer/:singerid', async (req, reply) => {
     const { singerid } = req.params
     const connection = await fastify.mysql.getConnection()
-    const [rows, fields] = await connection.query(`SELECT * from song where penyanyi_id=${singerid}`)
+    const [rows, fields] = await connection.query(`SELECT song_id, judul, penyanyi_id, audio_path, name FROM song inner join user on song.penyanyi_id = user.user_id where song.penyanyi_id=${singerid}`)
     connection.release()
     return rows
   })
