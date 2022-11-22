@@ -1,4 +1,4 @@
-DROP DATABASE `binotify-rest`;
+DROP DATABASE IF EXISTS `binotify-rest`;
 CREATE DATABASE `binotify-rest`;
 
 DROP TABLE IF EXISTS `binotify-rest`.`user`;
