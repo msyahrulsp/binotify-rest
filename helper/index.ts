@@ -1,15 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-export const replyData = (statusCode, success, data, message) => {
-  return {
-    status: statusCode,
-    success: success,
-    data: data,
-    message: message,
-  };
-};
-
 export const jwtSign = (data) => {
   return jwt.sign(
     {

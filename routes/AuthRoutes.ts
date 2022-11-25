@@ -1,11 +1,5 @@
 import UserModel from "../models/UserModel";
-import {
-  replyData,
-  jwtSign,
-  hashPassword,
-  verifyPassword,
-  verifyToken,
-} from "../helper";
+import { jwtSign, hashPassword, verifyPassword, verifyToken } from "../helper";
 
 /**
  * A plugin that provide encapsulated routes
@@ -22,39 +16,37 @@ async function auth(fastify, options) {
     const emailData = await userModel.getUser(email);
 
     if (usernameData && emailData) {
-      rep
-        .code(400)
-        .send(
-          replyData(
-            rep.statusCode,
-            false,
-            null,
-            "Username and Email already exist"
-          )
-        );
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "Username and email already exist",
+      });
     }
     if (usernameData) {
-      rep
-        .code(400)
-        .send(replyData(rep.statusCode, false, null, "Username already exist"));
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "Username already exist",
+      });
     }
     if (emailData) {
-      rep
-        .code(400)
-        .send(replyData(rep.statusCode, false, null, "Email already exist"));
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "Email already exist",
+      });
     }
 
     if (password !== confirm_password) {
-      rep
-        .code(400)
-        .send(
-          replyData(
-            rep.statusCode,
-            false,
-            null,
-            "Password and Confirm Password are different!"
-          )
-        );
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "Invalid password",
+      });
     }
 
     const hashedPassword = hashPassword(password);
@@ -72,20 +64,24 @@ async function auth(fastify, options) {
         username: response.username,
         isAdmin: response.isAdmin,
       });
-      rep
-        .code(200)
-        .send(
-          replyData(
-            rep.statusCode,
-            true,
-            { name, username, email, token },
-            "Register Successful"
-          )
-        );
+      rep.code(200).send({
+        status: rep.statusCode,
+        success: true,
+        data: {
+          name,
+          username,
+          email,
+          token,
+        },
+        message: "Register successful",
+      });
     } catch (err: any) {
-      rep
-        .code(400)
-        .send(replyData(rep.statusCode, false, null, "Register Unsuccessful"));
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "Register unsuccessful",
+      });
     }
   });
 
@@ -104,25 +100,27 @@ async function auth(fastify, options) {
           username: userData.username,
           isAdmin: userData.isAdmin,
         });
-        rep.code(200).send(
-          replyData(
-            rep.statusCode,
-            true,
-            {
-              token,
-            },
-            "Login Successful"
-          )
-        );
+        rep.code(200).send({
+          status: rep.statusCode,
+          success: true,
+          data: { token },
+          message: "Login successful",
+        });
       } else {
-        rep
-          .code(400)
-          .send(replyData(rep.statusCode, false, null, "Incorrect password"));
+        rep.code(400).send({
+          status: rep.statusCode,
+          success: false,
+          data: null,
+          message: "Incorrect password",
+        });
       }
     } else {
-      rep
-        .code(400)
-        .send(replyData(rep.statusCode, false, null, "User not found"));
+      rep.code(400).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: "User not found",
+      });
     }
   });
 
