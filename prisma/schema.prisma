@@ -11,7 +11,7 @@ model song {
   song_id     Int    @id @default(autoincrement())
   judul       String @db.VarChar(64)
   penyanyi_id Int?
-  audio_path  String @db.VarChar(255)
+  audio_path  String @db.Text
   user        user?  @relation(fields: [penyanyi_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "song_ibfk_1")
 
   @@index([penyanyi_id], map: "penyanyi_id")
