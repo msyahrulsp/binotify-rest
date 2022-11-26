@@ -21,7 +21,7 @@ CREATE TABLE `binotify-rest`.`song` (
   `song_id` int NOT NULL AUTO_INCREMENT,
   `judul` varchar(64) NOT NULL,
   `penyanyi_id` int DEFAULT NULL,
-  `audio_path` varchar(255) NOT NULL,
+  `audio_path` TEXT NOT NULL,
   PRIMARY KEY (`song_id`),
   FOREIGN KEY (`penyanyi_id`) REFERENCES `user` (`user_id`)
 );

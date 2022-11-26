@@ -19,9 +19,19 @@ function getSOAPReturn(xmlString: string) {
  */
 async function getSongs(fastify, options) {
   fastify.get('/singer/:singerid/songs', async (req, reply) => {
+    // get multiple songs based on singerid
     const { singerid } = req.params
     const connection = await fastify.mysql.getConnection()
     const [rows, fields] = await connection.query(`SELECT song_id, judul, penyanyi_id, audio_path, name FROM song inner join user on song.penyanyi_id = user.user_id where song.penyanyi_id=${singerid}`)
+    connection.release()
+    return rows
+  })
+
+  fastify.get('/singer/:singerid/songs/:songid', async (req, reply) => {
+    // get single song based on singerid
+    const { singerid, songid } = req.params
+    const connection = await fastify.mysql.getConnection()
+    const [rows, fields] = await connection.query(`SELECT song_id, judul, penyanyi_id, audio_path, name FROM song inner join user on song.penyanyi_id = user.user_id where song.penyanyi_id=${singerid} and song.song_id=${songid}`)
     connection.release()
     return rows
   })
