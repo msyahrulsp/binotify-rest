@@ -9,7 +9,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+      - ./database:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_INITDB_SKIP_TZINFO: 1
@@ -19,7 +19,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3306"]
       interval: 2.5s
-      timeout: 5s
+      timeout: 10s
       retries: 5
 
   backend:
@@ -29,6 +29,7 @@ services:
       - 3001:3001
     volumes:
       - .:/app
+      - /app/node_modules
     depends_on:
       database:
         condition: service_healthy

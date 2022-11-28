@@ -20,6 +20,6 @@
     "typescript": "^4.8.4"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only server.ts"
+    "dev": "npx prisma generate && ts-node-dev --respawn --transpile-only server.ts"
   }
 }
