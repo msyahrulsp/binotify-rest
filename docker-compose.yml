@@ -18,7 +18,7 @@ services:
       - app-tier
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3306"]
-      interval: 2.5s
+      interval: 4s
       timeout: 10s
       retries: 5
 
