@@ -1,5 +1,5 @@
-import UserModel from "../models/UserModel";
-import { jwtSign, hashPassword, verifyPassword, verifyToken } from "../helper";
+import UserModel from '../models/UserModel';
+import { jwtSign, hashPassword, verifyPassword, verifyToken } from '../helper';
 
 /**
  * A plugin that provide encapsulated routes
@@ -9,7 +9,7 @@ import { jwtSign, hashPassword, verifyPassword, verifyToken } from "../helper";
 async function auth(fastify, options) {
   const userModel = new UserModel();
 
-  fastify.post("/register", async (req, rep) => {
+  fastify.post('/register', async (req, rep) => {
     const { name, username, email, password, confirm_password } = req.body;
 
     const usernameData = await userModel.getUser(username);
@@ -20,24 +20,27 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "Username and email already exist",
+        message: 'Username and email already exist'
       });
+      return;
     }
     if (usernameData) {
       rep.code(400).send({
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "Username already exist",
+        message: 'Username already exist'
       });
+      return;
     }
     if (emailData) {
       rep.code(400).send({
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "Email already exist",
+        message: 'Email already exist'
       });
+      return;
     }
 
     if (password !== confirm_password) {
@@ -45,11 +48,12 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "Invalid password",
+        message: 'Invalid password'
       });
+      return;
     }
 
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     try {
       const response = await userModel.registerUser(
@@ -62,7 +66,7 @@ async function auth(fastify, options) {
         user_id: response.user_id,
         email: response.email,
         username: response.username,
-        isAdmin: response.isAdmin,
+        isAdmin: response.isAdmin
       });
       rep.code(200).send({
         status: rep.statusCode,
@@ -70,22 +74,23 @@ async function auth(fastify, options) {
         data: {
           name,
           username,
+          hashedPassword,
           email,
-          token,
+          token
         },
-        message: "Register successful",
+        message: 'Register successful'
       });
     } catch (err: any) {
       rep.code(400).send({
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "Register unsuccessful",
+        message: 'Register unsuccessful'
       });
     }
   });
 
-  fastify.post("/login", async (req, rep) => {
+  fastify.post('/login', async (req, rep) => {
     const { user, password } = req.body;
 
     const userData = await userModel.getUser(user);
@@ -98,20 +103,20 @@ async function auth(fastify, options) {
           user_id: userData.user_id,
           email: userData.email,
           username: userData.username,
-          isAdmin: userData.isAdmin,
+          isAdmin: userData.isAdmin
         });
         rep.code(200).send({
           status: rep.statusCode,
           success: true,
           data: { token },
-          message: "Login successful",
+          message: 'Login successful'
         });
       } else {
         rep.code(400).send({
           status: rep.statusCode,
           success: false,
           data: null,
-          message: "Incorrect password",
+          message: 'Incorrect password'
         });
       }
     } else {
@@ -119,12 +124,12 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: "User not found",
+        message: 'User not found'
       });
     }
   });
 
-  fastify.post("/validate", (req, rep) => {
+  fastify.post('/validate', (req, rep) => {
     const { token } = req.body;
     const decoded = verifyToken(token);
 
@@ -133,5 +138,5 @@ async function auth(fastify, options) {
 }
 
 module.exports = {
-  auth,
+  auth
 };

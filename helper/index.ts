@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 export const jwtSign = (data) => {
   return jwt.sign(
@@ -9,20 +9,20 @@ export const jwtSign = (data) => {
         user_id: data.user_id,
         email: data.email,
         username: data.username,
-        isAdmin: data.isAdmin,
-      },
+        isAdmin: data.isAdmin
+      }
     },
     process.env.JWT_SECRET_KEY
   );
 };
 
-export const hashPassword = (password) => {
-  const saltRounds = 10;
-  return bcrypt.hashSync(password, saltRounds);
+export const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
 };
 
 export const verifyPassword = (password, userPassword) => {
-  return bcrypt.hashSync(password, userPassword);
+  return bcrypt.compareSync(password, userPassword);
 };
 
 export const verifyToken = (token) => {
@@ -32,13 +32,13 @@ export const verifyToken = (token) => {
 /**
  * return http headers to use SOAP service
  */
- export const getSOAPHeader = () => {
+export const getSOAPHeader = () => {
   return {
     headers: {
-      'Authorization': `Basic ${process.env.SOAP_API_KEY}`,
+      Authorization: `Basic ${process.env.SOAP_API_KEY}`,
       'Content-Type': 'text/xml',
       'X-Forwarded-For': `${process.env.APP_ADDRESS}`,
-      'Date': new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    },
-  }
-}
+      Date: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    }
+  };
+};
