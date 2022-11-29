@@ -1,59 +1,50 @@
 version: '3.8'
 
 services:
-  database:
+  rest-database:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     expose:
-      - 3306
+      - 3307
     ports:
-      - 3306:3306
+      - 3307:3307
     volumes:
       - ./database:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_INITDB_SKIP_TZINFO: 1
-    container_name: rest-db
-    networks:
-      - app-tier
+      MYSQL_TCP_PORT: 3307
+    container_name: rest-database
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3306"]
-      interval: 4s
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3307"]
+      interval: 5s
       timeout: 10s
       retries: 5
 
-  backend:
+  rest-backend:
     build: .
     container_name: rest-backend
     ports:
-      - 3001:3001
+      - 3002:3002
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
-      database:
+      rest-database:
         condition: service_healthy
-    networks:
-      - app-tier
     expose:
-      - 3001
+      - 3002
     env_file:
       - .env
 
-  phpmyadmin:
+  rest-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: rest-phpmyadmin
     environment:
-      PMA_HOST: database
+      PMA_HOST: rest-database
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - 8080:80
+      - 8081:80
     depends_on:
-      database:
+      rest-database:
         condition: service_healthy
-    networks:
-      - app-tier
-
-networks:
-  app-tier:
-    driver: bridge
