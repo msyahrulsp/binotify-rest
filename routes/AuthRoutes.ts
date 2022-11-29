@@ -74,7 +74,6 @@ async function auth(fastify, options) {
         data: {
           name,
           username,
-          hashedPassword,
           email,
           token
         },
