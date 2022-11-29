@@ -28,3 +28,17 @@ export const verifyPassword = (password, userPassword) => {
 export const verifyToken = (token) => {
   return jwt.verify(token, process.env.JWT_SECRET_KEY);
 };
+
+/**
+ * return http headers to use SOAP service
+ */
+ export const getSOAPHeader = () => {
+  return {
+    headers: {
+      'Authorization': `Basic ${process.env.SOAP_API_KEY}`,
+      'Content-Type': 'text/xml',
+      'X-Forwarded-For': `${process.env.APP_ADDRESS}`,
+      'Date': new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    },
+  }
+}

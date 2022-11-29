@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMParser } from 'xmldom';
+import { getSOAPHeader } from '../helper';
 import SongModel from '../models/SongModel';
 
 function getSOAPReturn(xmlString: string) {
@@ -72,9 +73,7 @@ async function getSongs(fastify, options) {
       '</soapenv:Envelope>';
 
     return axios
-      .post('http://0.0.0.0:3003/subscription-status?wsdl', reqBody, {
-        headers: { 'Content-Type': 'text/xml' }
-      })
+      .post(`${process.env.BASE_SOAP_URL}/subscription-status?wsdl`, reqBody, getSOAPHeader())
       .then((res) => {
         if (res.status === 200) {
           subscriptionStatus = getSOAPReturn(res.data);
