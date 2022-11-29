@@ -36,15 +36,3 @@ services:
       - 3002
     env_file:
       - .env
-
-  rest-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: rest-phpmyadmin
-    environment:
-      PMA_HOST: rest-database
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 8081:80
-    depends_on:
-      rest-database:
-        condition: service_healthy
