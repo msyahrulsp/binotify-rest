@@ -1,4 +1,4 @@
-import UserModel from "../models/UserModel";
+import UserModel from '../models/UserModel';
 
 /**
  * A plugin that provide encapsulated routes
@@ -8,13 +8,13 @@ import UserModel from "../models/UserModel";
 async function singer(fastify, options) {
   const userModel = new UserModel();
 
-  fastify.get("/singers", async (req, rep) => {
-    const { user_id, name } = await userModel.getUsers();
+  fastify.get('/singers', async (req, rep) => {
+    const { user_id, name } = await userModel.getSingers();
     rep.code(200).send({
       status: rep.statusCode,
       success: true,
       data: { user_id, name },
-      message: "Success",
+      message: 'Success',
     });
   });
 }
