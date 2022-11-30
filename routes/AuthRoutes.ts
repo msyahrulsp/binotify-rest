@@ -72,10 +72,11 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: true,
         data: {
-          name,
-          username,
-          email,
-          token
+          token,
+          user: {
+            userId: response.user_id,
+            isAdmin: response.isAdmin
+          }
         },
         message: 'Register successful'
       });
