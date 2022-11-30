@@ -68,15 +68,19 @@ async function auth(fastify, options) {
         name: response.name,
         isAdmin: response.isAdmin
       });
+      const storeSinger = {
+        user_id: response.user_id,
+        name: response.name
+      };
       await client.connect();
       const cachedSingers = (await client.get('singers')) ?? null;
       if (cachedSingers) {
         await client.set(
           'singers',
-          cachedSingers.replace(']', `,${JSON.stringify(response)}]`)
+          cachedSingers.replace(']', `,${JSON.stringify(storeSinger)}]`)
         );
       } else {
-        await client.set('singers', JSON.stringify(response));
+        await client.set('singers', JSON.stringify(storeSinger));
       }
       await client.disconnect();
 

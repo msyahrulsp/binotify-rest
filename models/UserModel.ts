@@ -59,6 +59,10 @@ class UserModel extends Prisma {
     return this.prisma.user.findMany({
       where: {
         isAdmin: false
+      },
+      select: {
+        user_id: true,
+        name: true
       }
     });
   }
