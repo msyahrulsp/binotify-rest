@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 export const jwtSign = (data) => {
+  const EXPIRED_TIME = 1 * 60 * 60;
   return jwt.sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60,
+      exp: Math.floor(Date.now() / 1000) + EXPIRED_TIME,
       data: {
         user_id: data.user_id,
         email: data.email,

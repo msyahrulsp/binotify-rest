@@ -107,7 +107,13 @@ async function auth(fastify, options) {
         rep.code(200).send({
           status: rep.statusCode,
           success: true,
-          data: { token },
+          data: {
+            token,
+            user: {
+              userId: userData.user_id,
+              isAdmin: userData.isAdmin
+            }
+          },
           message: 'Login successful'
         });
       } else {
