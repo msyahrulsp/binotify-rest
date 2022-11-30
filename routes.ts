@@ -6,7 +6,7 @@
 async function routes(fastify, options) {
   const AuthRoutes = require('./routes/AuthRoutes');
 
-  fastify.register(require('./routes/getSongs'));
+  fastify.register(require('./routes/SongRoutes'));
   fastify.register(require('./routes/SingerRoutes'));
   fastify.register(AuthRoutes.auth, { prefix: '/auth' });
 

@@ -84,12 +84,7 @@ async function getSongs(fastify, options) {
       })
       .then(async () => {
         if (subscriptionStatus) {
-          const connection = await fastify.mysql.getConnection();
-          const [rows, fields] = await connection.query(
-            `SELECT * from song where penyanyi_id=${singerid}`
-          );
-          connection.release();
-          return rows;
+          return songModel.getSongBySingerID(singerid)
         } else {
           return null;
         }

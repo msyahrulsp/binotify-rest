@@ -27,18 +27,13 @@ CREATE TABLE `binotify-rest`.`song` (
 );
 
 INSERT INTO `binotify-rest`.`song` VALUES
-(1,'History',1,'./assets/musics/premium-song1.mp3'),
-(2,'Love in My Pocket',1,'./assets/musics/premium-song1.mp3'),
-(3,'Dat Stick', 1,'./assets/musics/premium-song3.mp3'),
-(4,'Glow Like Dat',1,'./assets/musics/premium-song4.mp3'),
-(5,'100 Degrees',1,'./assets/musics/premium-song5.mp3'),
-(6,'Lagu Premium 6',1,'./assets/musics/premium-song6.mp3'),
-(7,'Lagu Premium 7',1,'./assets/musics/premium-song7.mp3'),
-(8,'Lagu Premium 8', 1,'./assets/musics/premium-song8.mp3'),
-(9,'Lagu Premium 9',1,'./assets/musics/premium-song9.mp3'),
-(10,'Lagu Premium 10',1, './assets/musics/premium-song10.mp3'),
-(11,'Lagu Premium 11',1,'./assets/musics/premium-song11.mp3'),
-(12,'Lagu Premium 12',1,'./assets/musics/premium-song12.mp3'),
-(13,'Lagu Premium 13', 1,'./assets/musics/premium-song13.mp3'),
-(14,'Lagu Premium 14',1,'./assets/musics/premium-song14.mp3'),
-(15,'Lagu Premium 15',1,'./assets/musics/premium-song15.mp3');
+(1,'Teriyaki Boyz',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTravis%20Scott%20HVME%20%20Goosebumps%20Remix%20%20Official%20Audio.mp3%20-%202022-10-21T13%3A32%3A21.186Z?alt=media&token=8807a697-4ce5-4322-9434-d3334ee197de'),
+(2,'Goosebumps',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(3,'Dat Stick', 1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(4,'Glow Like Dat',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(5,'100 Degrees',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(6,'Lagu Premium 6',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(7,'Lagu Premium 7',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(8,'Lagu Premium 8', 1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(9,'Lagu Premium 9',1,'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af5'),
+(10,'Lagu Premium 10',1, 'https://firebasestorage.googleapis.com/v0/b/binotify-premium-song.appspot.com/o/files%2FTokyo%20Drift%20%20Teriyaki%20Boyz%20%20MUSIC%20VIDEO%20%20HD.mp3%20-%202022-10-21T13%3A32%3A21.167Z?alt=media&token=67d73271-b590-4f71-a094-b0abebce8af53');
