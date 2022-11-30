@@ -1,4 +1,5 @@
 import UserModel from '../models/UserModel';
+import { client } from '../services/redis';
 
 /**
  * A plugin that provide encapsulated routes
@@ -9,12 +10,22 @@ async function singer(fastify, options) {
   const userModel = new UserModel();
 
   fastify.get('/singers', async (req, rep) => {
-    const { user_id, name } = await userModel.getSingers();
+    await client.connect();
+
+    let data = JSON.parse(await client.get('singers')) ?? null;
+    if (!data) {
+      data = await userModel.getSingers();
+      await client.set('singers', JSON.stringify(data));
+    }
+    await client.disconnect();
+
     rep.code(200).send({
       status: rep.statusCode,
       success: true,
-      data: { user_id, name },
-      message: 'Success',
+      data,
+      message: 'Success'
     });
   });
 }
+
+module.exports = singer;

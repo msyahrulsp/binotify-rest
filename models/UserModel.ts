@@ -16,14 +16,14 @@ class UserModel extends Prisma {
     if (input.includes('@')) {
       user = this.prisma.user.findFirst({
         where: {
-          email: input,
-        },
+          email: input
+        }
       });
     } else {
       user = this.prisma.user.findFirst({
         where: {
-          username: input,
-        },
+          username: input
+        }
       });
     }
     return user;
@@ -43,14 +43,14 @@ class UserModel extends Prisma {
         password,
         name,
         username,
-        isAdmin: false,
-      },
+        isAdmin: false
+      }
     });
 
     return this.prisma.user.findFirst({
       where: {
-        email: email,
-      },
+        email: email
+      }
     });
   }
 
@@ -58,8 +58,8 @@ class UserModel extends Prisma {
     await this.prisma.$connect();
     return this.prisma.user.findMany({
       where: {
-        isAdmin: 0,
-      },
+        isAdmin: false
+      }
     });
   }
 }

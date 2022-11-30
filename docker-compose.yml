@@ -36,3 +36,16 @@ services:
       - 3002
     env_file:
       - .env
+
+  redis:
+    image: redis:6
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    volumes:
+      - .:/usr/local/etc/redis/redis.conf
+    expose:
+      - 6379
+    env_file:
+      - .env
