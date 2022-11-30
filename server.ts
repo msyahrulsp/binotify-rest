@@ -13,10 +13,6 @@ fastify.register(require('@fastify/cors'), {
   origin: '*'
 });
 
-fastify.get('/asdasd', function (request, reply) {
-  reply.send({ hello: 'world' });
-});
-
 const start = async () => {
   try {
     await fastify.listen({

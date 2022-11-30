@@ -4,17 +4,17 @@ CREATE DATABASE `binotify-rest`;
 DROP TABLE IF EXISTS `binotify-rest`.`user`;
 CREATE TABLE `binotify-rest`.`user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   PRIMARY KEY (`user_id`)
 );
 
-INSERT INTO `binotify-rest`.`user` (`user_id`, `email`, `password`, `name`, `username`, `isAdmin`) VALUES
-  (1, 'user@gmail.com', '$2y$10$KHFOPrd1l6EjwkNJEkyGx.Kn8tTukczRHFHwZK6eco6OsbAvknp9O', 'dito', 'Ardhito Pramono', 0),
-  (2, 'admin@gmail.com', '$2y$10$KHFOPrd1l6EjwkNJEkyGx.Kn8tTukczRHFHwZK6eco6OsbAvknp9O', 'halo', 'halohalo', 1);
+INSERT INTO `binotify-rest`.`user` (`user_id`, `name`, `email`, `username`, `password`, `isAdmin`) VALUES
+  (1, 'Ardhito Pramono', 'user@gmail.com', 'dito', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 0),
+  (2, 'halohalo', 'admin@gmail.com', 'halo', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1);
 
 DROP TABLE IF EXISTS `binotify-rest`.`song`;
 CREATE TABLE `binotify-rest`.`song` (

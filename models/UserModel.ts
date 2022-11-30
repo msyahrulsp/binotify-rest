@@ -1,4 +1,4 @@
-import Prisma from "./Prisma";
+import Prisma from './Prisma';
 
 class UserModel extends Prisma {
   constructor() {
@@ -13,17 +13,17 @@ class UserModel extends Prisma {
   async getUser(input) {
     await this.prisma.$connect();
     let user;
-    if (input.includes("@")) {
+    if (input.includes('@')) {
       user = this.prisma.user.findFirst({
         where: {
-          email: input,
-        },
+          email: input
+        }
       });
     } else {
       user = this.prisma.user.findFirst({
         where: {
-          username: input,
-        },
+          username: input
+        }
       });
     }
     return user;
@@ -43,14 +43,23 @@ class UserModel extends Prisma {
         password,
         name,
         username,
-        isAdmin: false,
-      },
+        isAdmin: false
+      }
     });
 
     return this.prisma.user.findFirst({
       where: {
-        email: email,
-      },
+        email: email
+      }
+    });
+  }
+
+  async getSingers() {
+    await this.prisma.$connect();
+    return this.prisma.user.findMany({
+      where: {
+        isAdmin: false
+      }
     });
   }
 }
