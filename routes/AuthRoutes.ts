@@ -1,5 +1,5 @@
-import UserModel from '../models/UserModel';
-import { jwtSign, hashPassword, verifyPassword, verifyToken } from '../helper';
+import UserModel from "../models/UserModel";
+import { jwtSign, hashPassword, verifyPassword, verifyToken } from "../helper";
 
 /**
  * A plugin that provide encapsulated routes
@@ -9,7 +9,7 @@ import { jwtSign, hashPassword, verifyPassword, verifyToken } from '../helper';
 async function auth(fastify, options) {
   const userModel = new UserModel();
 
-  fastify.post('/register', async (req, rep) => {
+  fastify.post("/register", async (req, rep) => {
     const { name, username, email, password, confirm_password } = req.body;
 
     const usernameData = await userModel.getUser(username);
@@ -20,7 +20,7 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'Username and email already exist'
+        message: "Username and email already exist",
       });
       return;
     }
@@ -29,7 +29,7 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'Username already exist'
+        message: "Username already exist",
       });
       return;
     }
@@ -38,7 +38,7 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'Email already exist'
+        message: "Email already exist",
       });
       return;
     }
@@ -48,7 +48,7 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'Invalid password'
+        message: "Invalid password",
       });
       return;
     }
@@ -64,9 +64,8 @@ async function auth(fastify, options) {
       );
       const token = jwtSign({
         user_id: response.user_id,
-        email: response.email,
-        username: response.username,
-        isAdmin: response.isAdmin
+        name: response.name,
+        isAdmin: response.isAdmin,
       });
       rep.code(200).send({
         status: rep.statusCode,
@@ -75,22 +74,23 @@ async function auth(fastify, options) {
           token,
           user: {
             userId: response.user_id,
-            isAdmin: response.isAdmin
-          }
+            name: response.name,
+            isAdmin: response.isAdmin,
+          },
         },
-        message: 'Register successful'
+        message: "Register successful",
       });
     } catch (err: any) {
       rep.code(400).send({
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'Register unsuccessful'
+        message: "Register unsuccessful",
       });
     }
   });
 
-  fastify.post('/login', async (req, rep) => {
+  fastify.post("/login", async (req, rep) => {
     const { user, password } = req.body;
 
     const userData = await userModel.getUser(user);
@@ -101,9 +101,8 @@ async function auth(fastify, options) {
       if (isPassword) {
         const token = jwtSign({
           user_id: userData.user_id,
-          email: userData.email,
-          username: userData.username,
-          isAdmin: userData.isAdmin
+          name: userData.name,
+          isAdmin: userData.isAdmin,
         });
         rep.code(200).send({
           status: rep.statusCode,
@@ -111,18 +110,19 @@ async function auth(fastify, options) {
           data: {
             token,
             user: {
+              name: userData.name,
               userId: userData.user_id,
-              isAdmin: userData.isAdmin
-            }
+              isAdmin: userData.isAdmin,
+            },
           },
-          message: 'Login successful'
+          message: "Login successful",
         });
       } else {
         rep.code(400).send({
           status: rep.statusCode,
           success: false,
           data: null,
-          message: 'Incorrect password'
+          message: "Incorrect password",
         });
       }
     } else {
@@ -130,13 +130,13 @@ async function auth(fastify, options) {
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'User not found'
+        message: "User not found",
       });
     }
   });
 
-  fastify.post('/validate', (req, rep) => {
-    const { token } = req.body;
+  fastify.post("/validate", (req, rep) => {
+    const token = req.body;
     const decoded = verifyToken(token);
 
     rep.send(decoded);
@@ -144,5 +144,5 @@ async function auth(fastify, options) {
 }
 
 module.exports = {
-  auth
+  auth,
 };
