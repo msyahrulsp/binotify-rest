@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 export const jwtSign = (data) => {
   const EXPIRED_TIME = 1 * 60 * 60;
@@ -9,8 +9,8 @@ export const jwtSign = (data) => {
       data: {
         user_id: data.user_id,
         name: data.name,
-        isAdmin: data.isAdmin,
-      },
+        isAdmin: data.isAdmin
+      }
     },
     process.env.JWT_SECRET_KEY
   );
@@ -36,9 +36,9 @@ export const getSOAPHeader = () => {
   return {
     headers: {
       Authorization: `Basic ${process.env.SOAP_API_KEY}`,
-      "Content-Type": "text/xml",
-      "X-Forwarded-For": `${process.env.APP_ADDRESS}`,
-      Date: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
-    },
+      'Content-Type': 'text/xml',
+      'X-Forwarded-For': `${process.env.APP_ADDRESS}`,
+      Date: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+    }
   };
 };

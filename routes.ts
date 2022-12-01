@@ -8,10 +8,18 @@ async function routes(fastify, options) {
 
   fastify.register(require('./routes/SongRoutes'));
   fastify.register(require('./routes/SingerRoutes'));
+  fastify.register(require('./routes/SubscriptionRoutes'));
   fastify.register(AuthRoutes.auth, { prefix: '/auth' });
 
   fastify.get('/', function (request: Request, reply: any) {
     reply.send({ status: 'REST API is healthy :)' });
+  });
+
+  fastify.get('*', function (request: Request, reply: any) {
+    reply.code(404).send({
+      status: reply.statusCode,
+      message: 'Not Found'
+    });
   });
 }
 

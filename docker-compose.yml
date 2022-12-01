@@ -17,9 +17,9 @@ services:
     container_name: rest-database
     healthcheck:
       test: ["CMD", "curl", "-f", "http://0.0.0.0:3307"]
-      interval: 5s
-      timeout: 10s
-      retries: 5
+      interval: 10s
+      timeout: 120s
+      retries: 11
 
   rest-backend:
     build: .
