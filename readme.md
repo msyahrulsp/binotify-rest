@@ -2,6 +2,25 @@
 Service yang digunakan untuk pengelolaan lagu premium oleh penyanyi dan pengelolaan status subscription oleh admin.
 
 ## Skema Basis Data
+![image](https://user-images.githubusercontent.com/71055612/205103844-ef0572fc-6402-43ee-a2fb-3ee02e87d9a3.png)
+
+## User Credentials
+Akun Penyanyi
+| User ID        | Email           | Nama           |
+| ------------- |-------------|-------------|
+| 4 | user@gmail.com | Ardhito Pramono |
+| 5 | yoasobi@gmail.com | YOASOBI |
+| 6 | ngimpi@gmail.com | Maudy Ayunda |
+
+Akun admin
+| User ID        | Email           |
+| ------------- |-------------|
+| 1 | 1352002@std.stei.itb.ac.id |
+| 2 | 13520080@std,stei.itb.ac.id |
+| 3 | 13520161@gstd,stei.itb.ac.id |
+| 7 | admin@gmail.com |
+
+Password: `password`
 
 ## Pembagian Tugas Backend Binotify Premium
 | Task        | NIM           |
