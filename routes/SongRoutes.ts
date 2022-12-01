@@ -73,7 +73,11 @@ async function getSongs(fastify, options) {
       '</soapenv:Envelope>';
 
     return axios
-      .post(`${process.env.BASE_SOAP_URL}/subscription-status?wsdl`, reqBody, getSOAPHeader())
+      .post(
+        `${process.env.BASE_SOAP_URL}/subscription-status?wsdl`,
+        reqBody,
+        getSOAPHeader()
+      )
       .then((res) => {
         if (res.status === 200) {
           subscriptionStatus = getSOAPReturn(res.data);
@@ -84,11 +88,69 @@ async function getSongs(fastify, options) {
       })
       .then(async () => {
         if (subscriptionStatus) {
-          return songModel.getSongBySingerID(singerid)
+          return songModel.getSongBySingerID(singerid);
         } else {
           return null;
         }
       });
+  });
+
+  fastify.post('/singer/:singerid/songs', async (req, rep) => {
+    const { judul, penyanyi_id, audio_path } = req.body;
+    try {
+      const connection = await fastify.mysql.getConnection();
+      await connection.query(
+        `INSERT INTO song (judul, penyanyi_id, audio_path) VALUES ('${judul}', '${penyanyi_id}', '${audio_path}')`
+      );
+      connection.release();
+      rep.code(200).send({
+        status: rep.statusCode,
+        message: 'Berhasil menambahkan lagu'
+      });
+    } catch (err: any) {
+      rep.code(500).send({
+        status: rep.statusCode,
+        message: err.message
+      });
+    }
+  });
+
+  fastify.put('/singer/:singerid/songs/:songid', async (req, rep) => {
+    const { song_id, judul, penyanyi_id, audio_path } = req.body;
+    try {
+      const connection = await fastify.mysql.getConnection();
+      await connection.query(
+        `UPDATE song SET judul='${judul}', penyanyi_id='${penyanyi_id}', audio_path='${audio_path}' WHERE song_id=${song_id}`
+      );
+      connection.release();
+      rep.code(200).send({
+        status: rep.statusCode,
+        message: 'Berhasil mengubah lagu'
+      });
+    } catch (err: any) {
+      rep.code(500).send({
+        status: rep.statusCode,
+        message: err.message
+      });
+    }
+  });
+
+  fastify.delete('/singer/:singerid/songs/:songid', async (req, rep) => {
+    const { songid } = req.params;
+    try {
+      const connection = await fastify.mysql.getConnection();
+      await connection.query(`DELETE FROM song WHERE song_id=${songid}`);
+      connection.release();
+      rep.code(200).send({
+        status: rep.statusCode,
+        message: 'Berhasil menghapus lagu'
+      });
+    } catch (err: any) {
+      rep.code(500).send({
+        status: rep.statusCode,
+        message: err.message
+      });
+    }
   });
 }
 
