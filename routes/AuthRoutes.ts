@@ -98,7 +98,7 @@ async function auth(fastify, options) {
         message: 'Register successful'
       });
     } catch (err: any) {
-      rep.code(400).send({
+      rep.code(500).send({
         status: rep.statusCode,
         success: false,
         data: null,
@@ -110,44 +110,53 @@ async function auth(fastify, options) {
   fastify.post('/login', async (req, rep) => {
     const { user, password } = req.body;
 
-    const userData = await userModel.getUser(user);
+    try {
+      const userData = await userModel.getUser(user);
 
-    if (userData) {
-      const isPassword = verifyPassword(password, userData.password);
+      if (userData) {
+        const isPassword = verifyPassword(password, userData.password);
 
-      if (isPassword) {
-        const token = jwtSign({
-          user_id: userData.user_id,
-          name: userData.name,
-          isAdmin: userData.isAdmin
-        });
-        rep.code(200).send({
-          status: rep.statusCode,
-          success: true,
-          data: {
-            token,
-            user: {
-              name: userData.name,
-              userId: userData.user_id,
-              isAdmin: userData.isAdmin
-            }
-          },
-          message: 'Login successful'
-        });
+        if (isPassword) {
+          const token = jwtSign({
+            user_id: userData.user_id,
+            name: userData.name,
+            isAdmin: userData.isAdmin
+          });
+          rep.code(200).send({
+            status: rep.statusCode,
+            success: true,
+            data: {
+              token,
+              user: {
+                name: userData.name,
+                userId: userData.user_id,
+                isAdmin: userData.isAdmin
+              }
+            },
+            message: 'Login successful'
+          });
+        } else {
+          rep.code(400).send({
+            status: rep.statusCode,
+            success: false,
+            data: null,
+            message: 'Incorrect password'
+          });
+        }
       } else {
         rep.code(400).send({
           status: rep.statusCode,
           success: false,
           data: null,
-          message: 'Incorrect password'
+          message: 'User not found'
         });
       }
-    } else {
-      rep.code(400).send({
+    } catch (err: any) {
+      rep.code(500).send({
         status: rep.statusCode,
         success: false,
         data: null,
-        message: 'User not found'
+        message: err.message
       });
     }
   });

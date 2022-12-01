@@ -10,21 +10,30 @@ async function singer(fastify, options) {
   const userModel = new UserModel();
 
   fastify.get('/singers', async (req, rep) => {
-    await client.connect();
+    try {
+      await client.connect();
 
-    let data = JSON.parse(await client.get('singers')) ?? null;
-    if (!data) {
-      data = await userModel.getSingers();
-      await client.set('singers', JSON.stringify(data));
+      let data = JSON.parse(await client.get('singers')) ?? null;
+      if (!data) {
+        data = await userModel.getSingers();
+        await client.set('singers', JSON.stringify(data));
+      }
+      await client.disconnect();
+
+      rep.code(200).send({
+        status: rep.statusCode,
+        success: true,
+        data,
+        message: 'Success'
+      });
+    } catch (err: any) {
+      rep.code(500).send({
+        status: rep.statusCode,
+        success: false,
+        data: null,
+        message: err.message
+      });
     }
-    await client.disconnect();
-
-    rep.code(200).send({
-      status: rep.statusCode,
-      success: true,
-      data,
-      message: 'Success'
-    });
   });
 }
 
