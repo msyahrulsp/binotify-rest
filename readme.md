@@ -1,5 +1,5 @@
 # Binotify REST
-Service yang digunakan untuk pengelolaan lagu premium oleh penyanyi dan pengelolaan status subscription oleh admin.
+Service backend yang digunakan untuk pengelolaan lagu premium oleh penyanyi dan pengelolaan status subscription oleh admin. Dibuat menggunakan fastify, JWT, dan prisma.
 
 ## Skema Basis Data
 ![image](https://user-images.githubusercontent.com/71055612/205103844-ef0572fc-6402-43ee-a2fb-3ee02e87d9a3.png)
