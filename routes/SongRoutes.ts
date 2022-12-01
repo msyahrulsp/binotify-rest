@@ -102,10 +102,18 @@ async function getSongs(fastify, options) {
       await connection.query(
         `INSERT INTO song (judul, penyanyi_id, audio_path) VALUES ('${judul}', '${penyanyi_id}', '${audio_path}')`
       );
+      const newSongId = await connection.query(
+        `SELECT song_id FROM song WHERE judul='${judul}' AND penyanyi_id='${penyanyi_id}' AND audio_path='${audio_path}'`
+      );
       connection.release();
       rep.code(200).send({
         status: rep.statusCode,
-        message: 'Berhasil menambahkan lagu'
+        message: 'Berhasil menambahkan lagu',
+        data: {
+          song_id: newSongId[0][0].song_id,
+          judul,
+          audio_path
+        }
       });
     } catch (err: any) {
       rep.code(500).send({
