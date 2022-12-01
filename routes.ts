@@ -9,6 +9,7 @@ async function routes(fastify, options) {
   fastify.register(require('./routes/SongRoutes'));
   fastify.register(require('./routes/SingerRoutes'));
   fastify.register(require('./routes/SubscriptionRoutes'));
+  fastify.register(require('./routes/AdminRoutes'));
   fastify.register(AuthRoutes.auth, { prefix: '/auth' });
 
   fastify.get('/', function (request: Request, reply: any) {

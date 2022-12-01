@@ -66,6 +66,22 @@ class UserModel extends Prisma {
       }
     });
   }
+
+  async getAdminEmail() {
+    await this.prisma.$connect();
+    return this.prisma.user.findFirst({
+      where: {
+        isAdmin: true
+      },
+      select: {
+        email: true,
+        name: true
+      },
+      orderBy: {
+        user_id: 'asc'
+      }
+    });
+  }
 }
 
 export default UserModel;
