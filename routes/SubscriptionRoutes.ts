@@ -66,7 +66,10 @@ async function subscription(fastify, options) {
             data: response
           });
         } else {
-          return null;
+          return rep.code(500).send({
+            status: rep.statusCode,
+            message: 'Gagal mendapatkan data'
+          });
         }
       });
   });
@@ -96,6 +99,11 @@ async function subscription(fastify, options) {
           rep.code(200).send({
             status: rep.statusCode,
             message: 'Berhasil mengubah status subscription'
+          });
+        } else {
+          rep.code(500).send({
+            status: rep.statusCode,
+            message: 'Gagal mengubah status subscription'
           });
         }
       });
