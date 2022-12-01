@@ -14,8 +14,8 @@ CREATE TABLE `binotify-rest`.`user` (
 
 INSERT INTO `binotify-rest`.`user` (`user_id`, `name`, `email`, `username`, `password`, `isAdmin`) VALUES
   (1, 'Ranjabi', '13520002@std.stei.itb.ac.id', '13520002', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1),
-  (2, 'Jason', '13520080@std,stei.itb.ac.id', '13520080', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1),
-  (3, 'SP', '13520161@gstd,stei.itb.ac.id', '13520161', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1),
+  (2, 'Jason', '13520080@std.stei.itb.ac.id', '13520080', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1),
+  (3, 'SP', '13520161@std.stei.itb.ac.id', '13520161', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 1),
   (4, 'Ardhito Pramono', 'user@gmail.com', 'dito', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 0),
   (5, 'YOASOBI', 'yoasobi@gmail.com', 'yoasobi', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 0),
   (6, 'Maudy Ayunda', 'ngimpi@gmail.com', 'ngimpi', '$2b$10$vcPLNP.zBJLucGVzpACSLO6Xm70BEbXsqFU0Flpt21QKu.1.cfhvG', 0),

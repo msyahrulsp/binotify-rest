@@ -69,17 +69,21 @@ class UserModel extends Prisma {
 
   async getAdminEmail() {
     await this.prisma.$connect();
-    return this.prisma.user.findFirst({
+    return this.prisma.user.findMany({
       where: {
-        isAdmin: true
+        isAdmin: true,
+        email: {
+          contains: '@std.stei.itb.ac.id'
+        }
       },
       select: {
         email: true,
         name: true
       },
       orderBy: {
-        user_id: 'asc'
-      }
+        user_id: 'desc'
+      },
+      take: 1
     });
   }
 }
