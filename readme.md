@@ -15,9 +15,9 @@ Akun Penyanyi
 Akun admin
 | User ID        | Email           |
 | ------------- |-------------|
-| 1 | 1352002@std.stei.itb.ac.id |
-| 2 | 13520080@std,stei.itb.ac.id |
-| 3 | 13520161@gstd,stei.itb.ac.id |
+| 1 | 13520002@std.stei.itb.ac.id |
+| 2 | 13520080@std.stei.itb.ac.id |
+| 3 | 13520161@gstd.stei.itb.ac.id |
 | 7 | admin@gmail.com |
 
 Password: `password`
